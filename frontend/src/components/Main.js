@@ -7,8 +7,8 @@ import Recipes from "../pages/Recipes";
 const Main = () => {
   return (
     <Routes> {/* The Switch decides which component to show based on the current URL.*/}
-      <Route path='/' element={<Homepage/>}/>
-      <Route path='/recipes' element={<Recipes/>}/>
+      <Route exact path='/' element={<Homepage/>}/>
+      <Route exact path='/recipes' element={<Recipes/>}/>
     </Routes>
   );
 }
