@@ -1,8 +1,12 @@
 import {useEffect, useRef} from "react";
 import '../styles/styles.css';
 import * as THREE from "three";
+import {BufferAttribute} from "three";
 
 const App = () => {
+    // TODO on clicking link, have all the stars fly away and leave plain background
+    //  maybe also animate cards to have one that was clicked move and grow
+    //  while others fly off
     const mountRef = useRef(null);
 
     useEffect(() => {
@@ -13,8 +17,8 @@ const App = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         mountRef.current.appendChild(renderer.domElement);
 
-        scene.background = new THREE.TextureLoader().load('/static/space2.jpeg');
-        camera.position.z = 30;
+        renderer.setClearColor(new THREE.Color('#20272b'))
+        camera.position.z = 5;
 
         const ambientLight = new THREE.AmbientLight(0xffffff);
         const pointLight = new THREE.PointLight(0xffffff);
@@ -22,39 +26,49 @@ const App = () => {
         scene.add(ambientLight, pointLight);
 
 
-        //ß
-        function addStar() {
-            const geometry = new THREE.SphereGeometry(0.1, 50, 50);
-            const material = new THREE.MeshBasicMaterial({color: 0xAE88D1});
-            const star = new THREE.Mesh(geometry, material);
-
-            const [x, y, z] = Array(3)
-                .fill()
-                .map(() => THREE.MathUtils.randFloatSpread(500));
-
-            star.position.set(x, y, z);
-            scene.add(star);
+        // Star-field
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+        const posArray = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount; i ++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
         }
+        particlesGeometry.setAttribute('position', new BufferAttribute(posArray, 3));
+        const material = new THREE.PointsMaterial({ size: 0.005 });
+        const particlesMesh = new THREE.Points(particlesGeometry, material)
 
-        Array(2000).fill().forEach(addStar);
-        //
-        let theta = 0;
-        let radius = 100;
+        scene.add(particlesMesh);
+
         const animate = function () {
-            requestAnimationFrame(animate);
-            theta += 0.1;
-            camera.position.x = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-            camera.position.y = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-            camera.position.z = radius * Math.cos( THREE.MathUtils.degToRad( theta ) );
-            camera.lookAt( scene.position );
+            // torus.rotation.x += 0.01;
+            // torus.rotation.y += 0.005;
+            // torus.rotation.z += 0.01;
+            targetX = mouseX * .001;
+            targetY = mouseY * .001;
+            if ( particlesMesh ) {
+                particlesMesh.rotation.y += 0.02 * ( targetX - particlesMesh.rotation.y );
+                particlesMesh.rotation.x += 0.02 * ( targetY - particlesMesh.rotation.x );
+            }
             renderer.render(scene, camera);
+            requestAnimationFrame(animate);
         };
         let onWindowResize = function () {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-        window.addEventListener("resize", onWindowResize, false);
+        let mouseX = 0;
+        let targetX = 0;
+
+        let mouseY = 0;
+        let targetY = 0;
+
+        let registerMousePos = function (event) {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
+        window.addEventListener('resize', onWindowResize, false);
+        window.addEventListener('mousemove', registerMousePos);
         animate();
     }, []);
 
