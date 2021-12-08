@@ -52,7 +52,6 @@ function Homepage() {
 
     // Read + set URL, in order to persist the view on a refresh
     useEffect(() => {
-        debugger;
         if (Object.keys(activeProject).length > 0) {
             window.history.pushState('', activeProject.title, `/${activeProject.name}`);
             setPath(window.location.pathname);
@@ -64,25 +63,19 @@ function Homepage() {
 
     // Load in projects.json
     useEffect(() => {
-        debugger;
         setProjects(Projects)
         setChunkedProjects(chunkArray([...projects], colCount));
     }, [projects]);
 
     // On clicking a project, load in the relevant data for that project
     useEffect(() => {
-        debugger;
         if (Object.keys(projects).length === 0) {
             return;
         }
         if (activeProjectName !== '') {
             setDetailViewExited(false);
-            if (projects.length > 0) {
-                const match = filterObj(projects, activeProjectName)
-                setActiveProject(match);
-            } else {
-                console.log('projects haven\'t loaded yet')
-            }
+            const match = filterObj(projects, activeProjectName)
+            setActiveProject(match);
         } else {
             setActiveProject({});
             setDetailViewOpened(false);
@@ -110,7 +103,6 @@ function Homepage() {
                 appear={true}
             >
                 <Row className={"pb-4 text-white main"}>
-
                     <Col xs={1}>
                         <Button className={"left"} variant="light" onClick={() => setActiveProjectName('')}>
                             {"<-"}
@@ -152,7 +144,8 @@ function Homepage() {
                 })
             }
             <Row>
-                proj: {activeProject.toString()}; active keys: {Object.keys(activeProject).length.toString()}; viewopen: {detailViewOpened.toString()};
+                proj: {activeProject.toString()}; active keys: {Object.keys(activeProject).length.toString()};
+                viewopen: {detailViewOpened.toString()};
                 {activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ? <ProjectDetails
                     text={activeProject.text}
                     active={activeProjectName === activeProject.name}
