@@ -11,8 +11,8 @@ function Homepage() {
     const [activeCard, setActiveCard] = useState('');
     const [activeProject, setActiveProject] = useState({});
     const [projects, setProjects] = useState({});
-    const [detailViewAnimationComplete, setDetailViewAnimationComplete] = useState(false);
-
+    const [detailViewOpened, setDetailViewOpened] = useState(false);
+    const [detailViewExited, setDetailViewExited] = useState(true);
 
     useEffect(() => {
         setProjects({
@@ -35,12 +35,12 @@ function Homepage() {
     }, []);
 
     useEffect(() => {
-        console.log('active card changed', activeCard);
         if (activeCard !== '') {
-            setActiveProject(projects[activeCard])
+            setDetailViewExited(false);
+            setActiveProject(projects[activeCard]);
         } else {
-            setActiveProject({})
-            setDetailViewAnimationComplete(false);
+            setActiveProject({});
+            setDetailViewOpened(false);
         }
     }, [activeCard, projects]);
 
@@ -48,27 +48,41 @@ function Homepage() {
         <div>
             <Canvas className="behind" style={{'z-index': -99}}/>
             <Container className="p-4">
-                <Fade in={activeCard === ''} unmountOnExit={true} appear={true}>
+                <Fade in={detailViewExited && activeCard === ''} unmountOnExit={true} appear={true}>
                     <Row className="pb-4 text-white">
                         <h1 className="header main">Hi, I'm Matt</h1>
                         <p className="main"> I'm a software developer based in Gloucestershire</p>
                     </Row>
                 </Fade>
-                <Fade in={activeCard === ''} unmountOnExit={true}>
+                <Fade in={detailViewExited && activeCard === ''} unmountOnExit={true}>
                     <Row className="pb-4 text-white main">
                         <h3 className="main">Here are some of the projects I've worked on:</h3>
                     </Row>
                 </Fade>
                 <Fade
-                    in={activeCard !== '' && activeProject && detailViewAnimationComplete}
-                      unmountOnExit={true}
-                >
-                    <Row className="pb-4 text-white main">
-                        <Button variant="dark" onClick={() => {
-                            setActiveCard('')
-                        }}>
-                            {"<-"}
-                        </Button>
+                    in={activeCard !== '' && activeProject && detailViewOpened}
+                    unmountOnExit={true}
+                    onExited={() => {
+                        setDetailViewExited(true)
+                    }}>
+                    <Row className={"pb-4 text-white main"}>
+
+                        <Col xs={1}>
+                            <Button className={"left"} variant="light" onClick={() => {
+                                setActiveCard('')
+                            }}>
+                                {"<-"}
+                            </Button>
+                        </Col>
+                    </Row>
+                </Fade>
+                <Fade
+                    in={activeCard !== '' && activeProject && detailViewOpened}
+                    unmountOnExit={true}
+                    onExited={() => {
+                        setDetailViewExited(true)
+                    }}>
+                    <Row className={"pb-4 text-white main"}>
                         <h3 className="main">{activeProject ? activeProject.title : null}</h3>
                     </Row>
                 </Fade>
@@ -84,9 +98,9 @@ function Homepage() {
                                 setActiveCard('')
                             }}
                             buttonText={'Try it out!'}
-                            hide={activeCard !== ''}
+                            show={detailViewExited && activeCard === ''}
                             onExited={() => {
-                                setDetailViewAnimationComplete(true)
+                                setDetailViewOpened(true)
                             }}
                         />
                     </Col>
@@ -102,9 +116,9 @@ function Homepage() {
                             }}
                             deActivate
                             buttonText={'Try it out!'}
-                            hide={activeCard !== ''}
+                            show={detailViewExited && activeCard === ''}
                             onExited={() => {
-                                setDetailViewAnimationComplete(true)
+                                setDetailViewOpened(true)
                             }}
                         />
                     </Col>
@@ -119,17 +133,16 @@ function Homepage() {
                                 setActiveCard('')
                             }}
                             buttonText={'Take a look!'}
-                            // active={activeCard === 'world-hunger'}
-                            hide={activeCard !== ''}
+                            show={detailViewExited && activeCard === ''}
                             onExited={() => {
-                                setDetailViewAnimationComplete(true)
+                                setDetailViewOpened(true)
                             }}
                         />
                     </Col>
                 </Row>
                 <Row>
                     {
-                        activeProject && Object.keys(activeProject).length > 0 && detailViewAnimationComplete ?
+                        activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ?
                             <ProjectDetails
                                 text={activeProject.text}
                                 active={activeCard === activeProject.name}
@@ -137,7 +150,6 @@ function Homepage() {
                             />
                             : null
                     }
-
                 </Row>
             </Container>
 
