@@ -8,7 +8,7 @@ function ProjectDetails(props) {
     }, [props.hide, props.active]);
     return (
         <div>
-            <Fade in={!props.hide || props.active} onEntered={() => {ProjectDetails.focus()}}>
+            <Fade in={!props.hide || props.active} appear={true}>
                 <Card className="mb-2" id="another-thing">
                     <Card.Body>
                         <Card.Title>{props.title}</Card.Title>

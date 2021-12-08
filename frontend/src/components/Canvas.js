@@ -70,8 +70,7 @@ const App = () => {
     }, []);
 
     return (
-        <div className="canvas" ref={mountRef}>
-        </div>
+        <div className="canvas" ref={mountRef}/>
     );
 }
 

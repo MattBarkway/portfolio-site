@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Button from "react-bootstrap/Button";
 import {Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 

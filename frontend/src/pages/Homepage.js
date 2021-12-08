@@ -6,156 +6,161 @@ import {useEffect, useState} from "react";
 import ProjectCard from "../components/ProjectCard";
 import ProjectDetails from "../components/ProjectDetails";
 import Button from "react-bootstrap/Button";
+import Projects from '../json/projects.json';
 
 function Homepage() {
-    const [activeCard, setActiveCard] = useState('');
+    const getInitialProjectName = function () {
+        const path = window.location.pathname.split('/');
+        return path.length === 2 ? path[1] : '';
+    };
+    const [activeProjectName, setActiveProjectName] = useState(getInitialProjectName());
     const [activeProject, setActiveProject] = useState({});
-    const [projects, setProjects] = useState({});
+    const [projects, setProjects] = useState([]);
+    const [chunkedProjects, setChunkedProjects] = useState([]);
     const [detailViewOpened, setDetailViewOpened] = useState(false);
     const [detailViewExited, setDetailViewExited] = useState(true);
+    const [path, setPath] = useState('/');
+    const [isLoadIn, setisLoadIn] = useState(true);
+    const colCount = 3;
 
-    useEffect(() => {
-        setProjects({
-            'recipe-recommender': {
-                title: 'Recipe Recommender 5000',
-                text: 'this is some recipe-recommender text',
-                name: 'recipe-recommender',
-            },
-            'another-thing': {
-                title: 'Another thing wot I made',
-                text: 'this is some another-thing text',
-                name: 'another-thing',
-            },
-            'world-hunger': {
-                title: 'Solving World Hunger',
-                text: 'this is some world-hunger text',
-                name: 'world-hunger',
-            },
+    const chunkArray = function (array, chunkSize) {
+        const chunks = []
+        while (array.length > 0)
+            chunks.push(array.splice(0, chunkSize));
+        return chunks;
+    };
+
+    const filterObj = function (obj, search) {
+        const filtered = obj.filter((item) => {
+            return item.name === search
         });
-    }, []);
+        if (filtered.length === 0) {
+            throw new Error('Item doesn\'t exist');
+        } else if (filtered.length === 1) {
+            return filtered[0];
+        } else {
+            throw new Error('Two items exist with the same name');
+        }
+    };
 
     useEffect(() => {
-        if (activeCard !== '') {
+        if (activeProjectName !== '' && isLoadIn) {
+            setDetailViewOpened(true);
+        }
+        setisLoadIn(false);
+    }, [activeProjectName, isLoadIn])
+
+    // Read + set URL, in order to persist the view on a refresh
+    useEffect(() => {
+        debugger;
+        if (Object.keys(activeProject).length > 0) {
+            window.history.pushState('', activeProject.title, `/${activeProject.name}`);
+            setPath(window.location.pathname);
+        } else {
+            window.history.pushState('', 'Home', `/`);
+            setPath(window.location.pathname);
+        }
+    }, [path, activeProject]);
+
+    // Load in projects.json
+    useEffect(() => {
+        debugger;
+        setProjects(Projects)
+        setChunkedProjects(chunkArray([...projects], colCount));
+    }, [projects]);
+
+    // On clicking a project, load in the relevant data for that project
+    useEffect(() => {
+        debugger;
+        if (Object.keys(projects).length === 0) {
+            return;
+        }
+        if (activeProjectName !== '') {
             setDetailViewExited(false);
-            setActiveProject(projects[activeCard]);
+            if (projects.length > 0) {
+                const match = filterObj(projects, activeProjectName)
+                setActiveProject(match);
+            } else {
+                console.log('projects haven\'t loaded yet')
+            }
         } else {
             setActiveProject({});
             setDetailViewOpened(false);
         }
-    }, [activeCard, projects]);
+    }, [activeProjectName, projects]);
 
-    return (
-        <div>
-            <Canvas className="behind" style={{'z-index': -99}}/>
-            <Container className="p-4">
-                <Fade in={detailViewExited && activeCard === ''} unmountOnExit={true} appear={true}>
-                    <Row className="pb-4 text-white">
-                        <h1 className="header main">Hi, I'm Matt</h1>
-                        <p className="main"> I'm a software developer based in Gloucestershire</p>
-                    </Row>
-                </Fade>
-                <Fade in={detailViewExited && activeCard === ''} unmountOnExit={true}>
-                    <Row className="pb-4 text-white main">
-                        <h3 className="main">Here are some of the projects I've worked on:</h3>
-                    </Row>
-                </Fade>
-                <Fade
-                    in={activeCard !== '' && activeProject && detailViewOpened}
-                    unmountOnExit={true}
-                    onExited={() => {
-                        setDetailViewExited(true)
-                    }}>
-                    <Row className={"pb-4 text-white main"}>
+    return (<div>
+        <Canvas className="behind" style={{'z-index': -99}}/>
+        <Container className="p-4">
+            <Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>
+                <Row className="pb-4 text-white">
+                    <h1 className="header main">Hi, I'm Matt</h1>
+                    <p className="main"> I'm a software developer based in Gloucestershire</p>
+                </Row>
+            </Fade>
+            <Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>
+                <Row className="pb-4 text-white main">
+                    <h3 className="main">Here are some of the projects I've worked on:</h3>
+                </Row>
+            </Fade>
+            <Fade
+                in={activeProjectName !== '' && activeProject && detailViewOpened}
+                unmountOnExit={true}
+                onExited={() => setDetailViewExited(true)}
+                appear={true}
+            >
+                <Row className={"pb-4 text-white main"}>
 
-                        <Col xs={1}>
-                            <Button className={"left"} variant="light" onClick={() => {
-                                setActiveCard('')
-                            }}>
-                                {"<-"}
-                            </Button>
-                        </Col>
-                    </Row>
-                </Fade>
-                <Fade
-                    in={activeCard !== '' && activeProject && detailViewOpened}
-                    unmountOnExit={true}
-                    onExited={() => {
-                        setDetailViewExited(true)
-                    }}>
-                    <Row className={"pb-4 text-white main"}>
-                        <h3 className="main">{activeProject ? activeProject.title : null}</h3>
-                    </Row>
-                </Fade>
-                <Row>
-                    <Col>
-                        <ProjectCard
-                            title={'Recipe recommender 5000'}
-                            text={'An AI program to recommend recipes you\'ll like'}
-                            onClick={() => {
-                                setActiveCard('recipe-recommender')
-                            }}
-                            closeAction={() => {
-                                setActiveCard('')
-                            }}
-                            buttonText={'Try it out!'}
-                            show={detailViewExited && activeCard === ''}
-                            onExited={() => {
-                                setDetailViewOpened(true)
-                            }}
-                        />
-                    </Col>
-                    <Col>
-                        <ProjectCard
-                            title={'Another thing wot I made'}
-                            text={'I\'m sure it does something really cool'}
-                            onClick={() => {
-                                setActiveCard('another-thing')
-                            }}
-                            closeAction={() => {
-                                setActiveCard('')
-                            }}
-                            deActivate
-                            buttonText={'Try it out!'}
-                            show={detailViewExited && activeCard === ''}
-                            onExited={() => {
-                                setDetailViewOpened(true)
-                            }}
-                        />
-                    </Col>
-                    <Col>
-                        <ProjectCard
-                            title={'Solved world hunger'}
-                            text={'I cooked up lots of food and solved world hunger'}
-                            onClick={() => {
-                                setActiveCard('world-hunger')
-                            }}
-                            closeAction={() => {
-                                setActiveCard('')
-                            }}
-                            buttonText={'Take a look!'}
-                            show={detailViewExited && activeCard === ''}
-                            onExited={() => {
-                                setDetailViewOpened(true)
-                            }}
-                        />
+                    <Col xs={1}>
+                        <Button className={"left"} variant="light" onClick={() => setActiveProjectName('')}>
+                            {"<-"}
+                        </Button>
                     </Col>
                 </Row>
-                <Row>
-                    {
-                        activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ?
-                            <ProjectDetails
-                                text={activeProject.text}
-                                active={activeCard === activeProject.name}
-                                hide={activeCard !== ''}
-                            />
-                            : null
-                    }
+            </Fade>
+            <Fade
+                in={activeProjectName !== '' && activeProject && detailViewOpened}
+                unmountOnExit={true}
+                onExited={() => {
+                    setDetailViewExited(true)
+                }}
+                appear={true}
+            >
+                <Row className={"pb-4 text-white main"}>
+                    <h3 className="main">{activeProject ? activeProject.title : null}</h3>
                 </Row>
-            </Container>
-
-
-        </div>
-    );
+            </Fade>
+            {
+                chunkedProjects.map((chunk, index) => {
+                    const chunkContent = chunk.map((project) => {
+                        return (
+                            <Col key={project.name}>
+                                <ProjectCard
+                                    key={project.name}
+                                    title={project.title}
+                                    text={project.text}
+                                    onClick={() => setActiveProjectName(project.name)}
+                                    closeAction={() => setActiveProjectName('')}
+                                    buttonText={project.buttonText}
+                                    show={detailViewExited && activeProjectName === ''}
+                                    onExited={() => setDetailViewOpened(true)}
+                                />
+                            </Col>
+                        )
+                    })
+                    return (<Row key={index}> {chunkContent} </Row>)
+                })
+            }
+            <Row>
+                proj: {activeProject.toString()}; active keys: {Object.keys(activeProject).length.toString()}; viewopen: {detailViewOpened.toString()};
+                {activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ? <ProjectDetails
+                    text={activeProject.text}
+                    active={activeProjectName === activeProject.name}
+                    hide={activeProjectName !== ''}
+                /> : null}
+            </Row>
+        </Container>
+    </div>);
 }
 
 export default Homepage;
