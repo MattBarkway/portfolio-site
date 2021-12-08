@@ -4,9 +4,9 @@ import * as THREE from "three";
 import {BufferAttribute} from "three";
 
 const App = () => {
-    // TODO on clicking link, have all the stars fly away and leave plain background
-    //  maybe also animate cards to have one that was clicked move and grow
-    //  while others fly off
+    // TODO persist page view via URL
+    //  override back to go back to main page
+    //  actually add some content
     const mountRef = useRef(null);
 
     useEffect(() => {
@@ -40,9 +40,6 @@ const App = () => {
         scene.add(particlesMesh);
 
         const animate = function () {
-            // torus.rotation.x += 0.01;
-            // torus.rotation.y += 0.005;
-            // torus.rotation.z += 0.01;
             targetX = mouseX * .001;
             targetY = mouseY * .001;
             if ( particlesMesh ) {
