@@ -1,6 +1,6 @@
 from flask import Flask
 
-from backend.api.basics import BasicAPI, BasicAPI2, GetTime
+from api.basics import BasicAPI, BasicAPI2, GetTime
 
 app = Flask(__name__)
 
