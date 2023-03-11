@@ -12,7 +12,8 @@ function ProjectCard(props) {
                         <Card.Text>
                             {props.text}
                         </Card.Text>
-                        <Button variant="dark" onClick={props.onClick}>{props.buttonText}</Button>{' '}
+                        {props.buttonText ?
+                            <Button variant="dark" onClick={props.onClick}>{props.buttonText}</Button> : ''}
                     </Card.Body>
                 </Card>
             </Fade>
