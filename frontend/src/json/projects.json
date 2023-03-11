@@ -1,24 +1,8 @@
 [
   {
-    "title": "Recipe Recommender 5000",
-    "description": "An AI program to recommend recipes you\\'ll like",
-    "text": "this is some recipe-recommender text",
-    "name": "recipe-recommender",
-    "image": "",
-    "buttonText": "Try it out!"
-  },
-  {
-    "title": "Another thing wot I made",
-    "description": "I\\'m sure it does something really cool",
-    "text": "this is some another-thing text",
-    "name": "another-thing",
-    "buttonText": "Try it out!"
-  },
-  {
-    "title": "Solving World Hunger",
-    "description": "I cooked up lots of food and solved world hunger",
-    "text": "this is some world-hunger text",
-    "name": "world-hunger",
-    "buttonText": "Take a look!"
+    "title": "Coming soon!",
+    "description": "...",
+    "text": "...",
+    "name": "recipe-recommender"
   }
 ]
