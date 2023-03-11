@@ -86,72 +86,96 @@ function Homepage() {
         <Canvas className="behind" style={{'z-index': -99}}/>
         <Container className="p-4">
             <Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>
-                <Row className="pb-4 text-white">
+                <Row className="text-white">
                     <h1 className="header main">Hi, I'm Matt</h1>
-                    <p className="main"> I'm a software developer based in Gloucestershire</p>
+                    <p className="main">👋 I'm a software developer based near Bristol</p>
                 </Row>
             </Fade>
             <Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>
-                <Row className="pb-4 text-white main">
-                    <h3 className="main">Here are some of the projects I've worked on:</h3>
-                </Row>
+                <div className="pt-4 pb-4 h-25" style={{}}>
+                    <img src="/static/matt.jpeg"
+                         alt="Me"
+                         className="portrait"
+                    />
+                </div>
             </Fade>
-            <Fade
-                in={activeProjectName !== '' && activeProject && detailViewOpened}
-                unmountOnExit={true}
-                onExited={() => setDetailViewExited(true)}
-                appear={true}
-            >
-                <Row className={"pb-4 text-white main"}>
-                    <Col xs={1}>
-                        <Button className={"left"} variant="light" onClick={() => setActiveProjectName('')}>
-                            {"<-"}
-                        </Button>
-                    </Col>
-                </Row>
+            <Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>
+                <div className="pb-1">
+                    <a href="https://github.com/MattBarkway" target="_blank" rel="noreferrer" className="p-2 pb-4">
+                        <img src="/static/github.png"
+                             alt="GitHub logo"
+                             className="social"
+                        />
+                    </a>
+                    <a href="https://www.linkedin.com/in/matthew-barkway-8824ab168/" target="_blank" rel="noreferrer">
+                        <img src="/static/linkedin.png"
+                             alt="GitHub logo"
+                             className="social"
+                        />
+                    </a>
+                </div>
             </Fade>
-            <Fade
-                in={activeProjectName !== '' && activeProject && detailViewOpened}
-                unmountOnExit={true}
-                onExited={() => {
-                    setDetailViewExited(true)
-                }}
-                appear={true}
-            >
-                <Row className={"pb-4 text-white main"}>
-                    <h3 className="main">{activeProject ? activeProject.title : null}</h3>
-                </Row>
-            </Fade>
-            {
-                chunkedProjects.map((chunk, index) => {
-                    const chunkContent = chunk.map((project) => {
-                        return (
-                            <Col key={project.name}>
-                                <ProjectCard
-                                    key={project.name}
-                                    title={project.title}
-                                    text={project.text}
-                                    onClick={() => setActiveProjectName(project.name)}
-                                    closeAction={() => setActiveProjectName('')}
-                                    buttonText={project.buttonText}
-                                    show={detailViewExited && activeProjectName === ''}
-                                    onExited={() => setDetailViewOpened(true)}
-                                />
-                            </Col>
-                        )
-                    })
-                    return (<Row key={index}> {chunkContent} </Row>)
-                })
-            }
-            <Row>
-                proj: {activeProject.toString()}; active keys: {Object.keys(activeProject).length.toString()};
-                viewopen: {detailViewOpened.toString()};
-                {activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ? <ProjectDetails
-                    text={activeProject.text}
-                    active={activeProjectName === activeProject.name}
-                    hide={activeProjectName !== ''}
-                /> : null}
-            </Row>
+            {/*<Fade in={detailViewExited && activeProjectName === ''} unmountOnExit={true} appear={true}>*/}
+            {/*    <Row className="pb-4 pt-4 text-white main">*/}
+            {/*        <h3 className="main">Here are some of the projects I've worked on:</h3>*/}
+            {/*    </Row>*/}
+            {/*</Fade>*/}
+            {/*<Fade*/}
+            {/*    in={activeProjectName !== '' && activeProject && detailViewOpened}*/}
+            {/*    unmountOnExit={true}*/}
+            {/*    onExited={() => setDetailViewExited(true)}*/}
+            {/*    appear={true}*/}
+            {/*>*/}
+            {/*    <Row className={"pb-4 text-white main"}>*/}
+            {/*        <Col xs={1}>*/}
+            {/*            <Button className={"left"} variant="light" onClick={() => setActiveProjectName('')}>*/}
+            {/*                {"<-"}*/}
+            {/*            </Button>*/}
+            {/*        </Col>*/}
+            {/*    </Row>*/}
+            {/*</Fade>*/}
+            {/*<Fade*/}
+            {/*    in={activeProjectName !== '' && activeProject && detailViewOpened}*/}
+            {/*    unmountOnExit={true}*/}
+            {/*    onExited={() => {*/}
+            {/*        setDetailViewExited(true)*/}
+            {/*    }}*/}
+            {/*    appear={true}*/}
+            {/*>*/}
+            {/*    <Row className={"pb-4 text-white main"}>*/}
+            {/*        <h3 className="main">{activeProject ? activeProject.title : null}</h3>*/}
+            {/*    </Row>*/}
+            {/*</Fade>*/}
+            {/*{*/}
+            {/*    chunkedProjects.map((chunk, index) => {*/}
+            {/*        const chunkContent = chunk.map((project) => {*/}
+            {/*            return (*/}
+            {/*                <Col key={project.name}>*/}
+            {/*                    <ProjectCard*/}
+            {/*                        key={project.name}*/}
+            {/*                        title={project.title}*/}
+            {/*                        text={project.text}*/}
+            {/*                        onClick={() => setActiveProjectName(project.name)}*/}
+            {/*                        closeAction={() => setActiveProjectName('')}*/}
+            {/*                        buttonText={project.buttonText}*/}
+            {/*                        show={detailViewExited && activeProjectName === ''}*/}
+            {/*                        onExited={() => setDetailViewOpened(true)}*/}
+            {/*                    />*/}
+            {/*                </Col>*/}
+            {/*            )*/}
+            {/*        })*/}
+            {/*        return (<Row key={index}> {chunkContent} </Row>)*/}
+            {/*    })*/}
+            {/*}*/}
+            {/*<Row>*/}
+            {/*    proj: {activeProject.toString()}; active keys: {Object.keys(activeProject).length.toString()};*/}
+            {/*    viewopen: {detailViewOpened.toString()};*/}
+            {/*    {activeProject && Object.keys(activeProject).length > 0 && detailViewOpened ? <ProjectDetails*/}
+            {/*        text={activeProject.text}*/}
+            {/*        active={activeProjectName === activeProject.name}*/}
+            {/*        hide={activeProjectName !== ''}*/}
+            {/*    /> : null}*/}
+            {/*</Row>*/}
         </Container>
     </div>);
 }

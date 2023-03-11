@@ -1,9 +1,22 @@
 canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -99;
 }
+
+.social {
+    height: 4em;
+    background: #404e56;
+    border-radius: 15%;
+    padding: 0.2em;
+}
+
+.portrait {
+    border-radius: 35%;
+    height: 20em;
+}
+
 .main {
-  z-index: 99;
+    z-index: 99;
 }
