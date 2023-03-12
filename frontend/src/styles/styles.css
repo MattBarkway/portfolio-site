@@ -20,3 +20,12 @@ canvas {
 .main {
     z-index: 99;
 }
+
+.container {
+    max-width: 20em !important;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}
