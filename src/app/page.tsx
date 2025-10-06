@@ -1,6 +1,5 @@
 "use client";
 import { useProjects } from "@/hooks/useProjects";
-import Canvas from "@/components/Canvas";
 import { AnimatePresence, motion } from "framer-motion";
 import PageIntro from "@/components/PageIntro";
 import ProjectGrid from "@/components/ProjectGrid";

@@ -13,7 +13,7 @@
     "name": "strava-wrapper",
     "description": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete.",
     "image": "/projects/strava-wrapper.png",
-    "text": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete. This is a fully functional Strava API wrapper written in Rust, utilising a Builder pattern. Within the library, macros are used to simplify adding new endpoints. You just need to create a struct representing the endpoint, and then Derive each of the expected query or path filters. Feel free to check out the repo and documentation below.",
+    "text": "A Rust wrapper for the Strava API, utilising a Builder pattern. Within the library, macros are used to simplify adding new endpoints. You just need to create a struct representing the endpoint, and then Derive each of the expected query or path filters. Feel free to check out the repo and documentation below.",
     "github_url": "https://github.com/MattBarkway/strava-wrapper"
   },
   {
