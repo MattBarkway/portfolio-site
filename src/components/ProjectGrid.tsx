@@ -26,7 +26,7 @@ export default function ProjectGrid({
           <ProjectCard
             key={project.name}
             title={project.title}
-            description={project.description??""}
+            description={project.description ?? ""}
             onClick={() => onProjectClick(project.name)}
             show={true}
           />
