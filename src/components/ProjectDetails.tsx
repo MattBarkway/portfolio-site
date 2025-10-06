@@ -26,24 +26,22 @@ export default function ProjectDetails({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 30 }}
       transition={{ duration: 0.4 }}
-      className="mt-6 rounded-lg border-gray-700 bg-gray-800 p-6 shadow text-white flex flex-col gap-4"
+      className="mt-6 rounded-lg border-gray-700 bg-gray-800 p-6 shadow text-white flex flex-col gap-4 w-full"
     >
-      {/* Optional project image */}
-      {image && (
-        <img
-          src={image}
-          alt={`${title} screenshot`}
-          className="w-full rounded-lg object-cover"
-        />
-      )}
+        {image && (
+            <div className="w-full flex justify-start">
+                <img
+                    src={image}
+                    alt={`${title} screenshot`}
+                    className="rounded-lg object-contain max-w-[600px] max-h-[400px]"
+                />
+            </div>
+        )}
 
       <h3 className="text-2xl font-bold">{title}</h3>
 
-      {description && <p className="text-gray-300 italic">{description}</p>}
-
       <p className="text-gray-200">{text}</p>
 
-      {/* Links */}
       <div className="flex gap-4 mt-2">
         {github_url && (
           <a

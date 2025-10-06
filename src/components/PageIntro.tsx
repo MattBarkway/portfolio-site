@@ -20,7 +20,7 @@ export default function PageIntro() {
       </div>
 
       <h3 className="text-2xl font-semibold pb-4">
-        Here are some of the projects I've worked on:
+        Here are some recent projects I've worked on:
       </h3>
     </motion.div>
   );

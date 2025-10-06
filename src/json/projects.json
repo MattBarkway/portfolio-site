@@ -2,37 +2,39 @@
   {
     "title": "SummitStats",
     "name": "summit-stats",
-    "description": "A platform to analyse your Strava data",
-    "text": "SummitStats lets you analyse your Strava data with custom analytics and visualizations.",
+    "description": "SummitStats lets you analyse your Strava data with custom analytics and visualizations.",
+    "text": "SummitStats lets you analyse your Strava data with custom analytics and visualizations. This tool was built with Next.js (TypeScript) and Axum (Rust), It makes use of my own separately published Strava API wrapper for interactions with the Strava API.",
     "github_url": "https://github.com/MattBarkway/summit-stats",
-    "image": "/projects/summitstats.png",
+    "image": "/projects/summit-stats.png",
     "url": "https://summitstats.example.com"
   },
   {
     "title": "Strava Wrapper",
     "name": "strava-wrapper",
-    "description": "Rust wrapper for the Strava API",
-    "text": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete.",
+    "description": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete.",
+    "image": "/projects/strava-wrapper.png",
+    "text": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete. This is a fully functional Strava API wrapper written in Rust, utilising a Builder pattern. Within the library, macros are used to simplify adding new endpoints. You just need to create a struct representing the endpoint, and then Derive each of the expected query or path filters. Feel free to check out the repo and documentation below.",
     "github_url": "https://github.com/MattBarkway/strava-wrapper"
   },
   {
     "title": "Flow Parser",
     "name": "flow-parser",
-    "description": "Parser for structured pipe delimited files",
-    "text": "Parser for structured pipe delimited files. These files are used in industries such as healthcare and the UK energy industry.",
+    "description": "Parser for structured pipe delimited files. These files are used in industries such as healthcare, and the UK energy industry.",
+    "image": "/projects/flow-parser.png",
+    "text": "Parser for structured pipe delimited files. These files are used in industries such as healthcare and the UK energy industry. This was a quick experiment to familiarise myself with building Rust projects with Python bindings. The package allows 10x faster parsing of flow files than the equivalent Python-only solution.",
     "github_url": "https://github.com/MattBarkway/flow-parser"
   },
   {
     "title": "Shopping List",
     "name": "shopping-list",
-    "description": "Collaborative shopping list app",
-    "text": "A collaborative shopping list app that allows multiple users to live update the same list in real time.",
+    "description": "A collaborative shopping list app that allows multiple users to live update the same list in real time.",
+    "text": "A collaborative shopping list app that allows multiple users to live update the same list in real time. Built with Svelte (TypeScript) and FastAPI (Python), and utilising web sockets to share the state between collaborating users.",
     "github_url": "https://github.com/MattBarkway/shopping-list"
   },
   {
     "title": "Recipes",
     "name": "recipes",
-    "description": "Word2Vec recipe recommendation engine",
+    "description": "Ground-up Word2Vec implementation for clustering and recommending cooking recipes.",
     "text": "Ground-up Word2Vec implementation for clustering and recommending cooking recipes.",
     "github_url": "https://github.com/MattBarkway/recipes"
   }
