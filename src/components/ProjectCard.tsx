@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 type ProjectCardProps = {
   show: boolean;
   title: string;
-    description: string;
+  description: string;
   onClick: () => void;
 };
 
 export default function ProjectCard({
   show,
   title,
-                                        description,
+  description,
   onClick,
 }: ProjectCardProps) {
   if (!show) return null;
