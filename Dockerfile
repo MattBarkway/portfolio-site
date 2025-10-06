@@ -1,35 +1,27 @@
-# Build stage
-FROM node:18-bullseye AS builder
+FROM node:18-bullseye as builder
 
-# Set working directory
+RUN corepack enable
+RUN corepack prepare pnpm@8.15.7 --activate
+
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml ./
 
-# Install deps
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
-# Copy all files
 COPY . .
 
-# Build the app
-RUN npm run build
+RUN pnpm build
 
-# Production image
 FROM node:18-bullseye
 
 WORKDIR /app
 
-# Copy built app + node_modules
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+
 COPY --from=builder /app /app
 
-# Expose Fly.io port
-ENV PORT=8080
-ENV NODE_ENV=production
+ENV PORT 8080
 
-# Ensure Node uses the correct port
-EXPOSE 8080
-
-# Start the app
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "start"]

@@ -28,15 +28,15 @@ export default function ProjectDetails({
       transition={{ duration: 0.4 }}
       className="mt-6 rounded-lg border-gray-700 bg-gray-800 p-6 shadow text-white flex flex-col gap-4 w-full"
     >
-        {image && (
-            <div className="w-full flex justify-start">
-                <img
-                    src={image}
-                    alt={`${title} screenshot`}
-                    className="rounded-lg object-contain max-w-[600px] max-h-[400px]"
-                />
-            </div>
-        )}
+      {image && (
+        <div className="w-full flex justify-start">
+          <img
+            src={image}
+            alt={`${title} screenshot`}
+            className="rounded-lg object-contain max-w-[600px] max-h-[400px]"
+          />
+        </div>
+      )}
 
       <h3 className="text-2xl font-bold">{title}</h3>
 
