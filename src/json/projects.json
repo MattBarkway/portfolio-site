@@ -1,0 +1,39 @@
+[
+  {
+    "title": "SummitStats",
+    "name": "summit-stats",
+    "description": "A platform to analyse your Strava data",
+    "text": "SummitStats lets you analyse your Strava data with custom analytics and visualizations.",
+    "github_url": "https://github.com/MattBarkway/summit-stats",
+    "image": "/projects/summitstats.png",
+    "url": "https://summitstats.example.com"
+  },
+  {
+    "title": "Strava Wrapper",
+    "name": "strava-wrapper",
+    "description": "Rust wrapper for the Strava API",
+    "text": "A Rust wrapper for the Strava API, with a builder pattern for type-safe autocomplete.",
+    "github_url": "https://github.com/MattBarkway/strava-wrapper"
+  },
+  {
+    "title": "Flow Parser",
+    "name": "flow-parser",
+    "description": "Parser for structured pipe delimited files",
+    "text": "Parser for structured pipe delimited files. These files are used in industries such as healthcare and the UK energy industry.",
+    "github_url": "https://github.com/MattBarkway/flow-parser"
+  },
+  {
+    "title": "Shopping List",
+    "name": "shopping-list",
+    "description": "Collaborative shopping list app",
+    "text": "A collaborative shopping list app that allows multiple users to live update the same list in real time.",
+    "github_url": "https://github.com/MattBarkway/shopping-list"
+  },
+  {
+    "title": "Recipes",
+    "name": "recipes",
+    "description": "Word2Vec recipe recommendation engine",
+    "text": "Ground-up Word2Vec implementation for clustering and recommending cooking recipes.",
+    "github_url": "https://github.com/MattBarkway/recipes"
+  }
+]
