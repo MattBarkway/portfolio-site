@@ -1,5 +1,3 @@
-# fly.toml file generated for dev-site on 2023-03-11T22:37:38Z
-
 app = "dev-site"
 kill_signal = "SIGINT"
 kill_timeout = 5
