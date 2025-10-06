@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ProjectsJSON from "@/json/projects.json";
@@ -27,17 +26,12 @@ export function useProjects(colCount: number = 3) {
     return chunks;
   };
 
-  useEffect(() => {
-    setProjects(ProjectsJSON as Project[]);
-    setChunkedProjects(chunkArray(ProjectsJSON as Project[], colCount));
-
+  const updateActiveProjectFromURL = () => {
     const params = new URLSearchParams(window.location.search);
     const projectName = params.get("project") || "";
 
     if (projectName) {
-      const match = (ProjectsJSON as Project[]).find(
-        (p) => p.name === projectName,
-      );
+      const match = projects.find((p) => p.name === projectName);
       if (match) {
         setActiveProjectName(projectName);
         setActiveProject(match);
@@ -47,12 +41,27 @@ export function useProjects(colCount: number = 3) {
         window.history.replaceState({}, "", "/");
         toast.error("I haven't made that one yet");
       }
+    } else {
+      setActiveProjectName("");
+      setActiveProject(null);
     }
+  };
+
+  useEffect(() => {
+    setProjects(ProjectsJSON as Project[]);
+    setChunkedProjects(chunkArray(ProjectsJSON as Project[], colCount));
   }, [colCount]);
 
+  useEffect(() => {
+    updateActiveProjectFromURL();
+    const onPopState = () => updateActiveProjectFromURL();
+    window.addEventListener("popstate", onPopState);
+
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [projects]);
+
   const openProject = (name: string) => {
-    const project =
-      (ProjectsJSON as Project[]).find((p) => p.name === name) || null;
+    const project = projects.find((p) => p.name === name) || null;
     setActiveProjectName(name);
     setActiveProject(project);
     const url = name ? `/?project=${name}` : "/";
@@ -62,8 +71,7 @@ export function useProjects(colCount: number = 3) {
   const closeProject = () => {
     setActiveProjectName("");
     setActiveProject(null);
-    const url = "/";
-    window.history.pushState({}, "", url);
+    window.history.pushState({}, "", "/");
   };
 
   return {
