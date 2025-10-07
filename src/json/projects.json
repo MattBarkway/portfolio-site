@@ -5,8 +5,7 @@
     "description": "SummitStats lets you analyse your Strava data with custom analytics and visualizations.",
     "text": "SummitStats lets you analyse your Strava data with custom analytics and visualizations. This tool was built with Next.js (TypeScript) and Axum (Rust), It makes use of my own separately published Strava API wrapper for interactions with the Strava API.",
     "github_url": "https://github.com/MattBarkway/summit-stats",
-    "image": "/projects/summit-stats.png",
-    "url": "https://summitstats.example.com"
+    "image": "/projects/summit-stats.png"
   },
   {
     "title": "Strava Wrapper",
