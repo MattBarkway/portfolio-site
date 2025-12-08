@@ -13,7 +13,7 @@ COPY . .
 
 RUN pnpm build
 
-FROM node:18-bullseye
+FROM node:22-bullseye
 
 WORKDIR /app
 
