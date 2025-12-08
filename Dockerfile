@@ -1,7 +1,7 @@
-FROM node:18-bullseye as builder
+FROM node:22-bullseye as builder
 
 RUN corepack enable
-RUN corepack prepare pnpm@8.15.7 --activate
+RUN corepack prepare pnpm@10.25.0 --activate
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ FROM node:18-bullseye
 WORKDIR /app
 
 RUN corepack enable
-RUN corepack prepare pnpm@latest --activate
+RUN corepack prepare pnpm@10.25.0 --activate
 
 COPY --from=builder /app /app
 
